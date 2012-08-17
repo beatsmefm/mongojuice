@@ -1,0 +1,39 @@
+{
+  "name": "mongojuice",
+  "version": "0.0.1",
+  "description": "Mongo Route Data Mapping for a REST web service",
+  "author": { "name": "Chris Fricke", "email": "chris.fricke@gmail.com", "url": "http://www.mongojuice.com/" },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "scripts": {
+    "test": "node ./test"
+    },
+  "bugs": {
+    "url": ""
+  },
+  "dependencies": {
+    "nconf": "0.5.x",
+    "mongoose": "3.0.x",
+    "optimist": "0.3.x",
+    "underscore": "1.3.x"
+  },
+  "devDependencies": {
+    "chai": "1.1.x",
+    "mocha": "1.3.x",
+    "node-mocks-http": "0.0.x",
+    "proxyquire": "0.3.x",
+    "sinon": "1.4.x",
+    "sinon-chai": "2.1.x"
+  },
+  "scripts": {
+    "test": ""
+  },
+  "engines": { "node": ">= 0.6.0" },
+  "licenses": [ {
+    "type": "MIT",
+    "url": "http://www.opensource.org/licenses/MIT" 
+  } ],
+  "keywords": ["mongo", "orm", "rest", "config"]
+}
