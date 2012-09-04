@@ -2,59 +2,116 @@ var chai            = require('chai'),
     expect          = chai.expect,
     sinon           = require('sinon'),
     sinonChai       = require('sinon-chai'),
-    proxyrequire    = require('proxyquire'),
-    util            = require('util'),
-    Juicer          = require('../../lib/juice').Juicer;
+    proxyquire    = require('proxyquire'),
+    util            = require('util');
 
 chai.use(sinonChai);
 
 
 describe('juice.js', function() {
 
-    describe('creating juicer', function(){
-        var sandbox = sinon.sandbox.create();
+    var BlenderManagerStub,
+        DBManagerStub,
+        Juicer,
+        blenderAddConfigSpy,
+        blenderIsEmptySpy,
+        blenderGetDbCallsSpy,
+        dbAddConfigSpy,
+        dbIsEmptySpy,
+        dbGetDbCallsSpy,
+        sandbox = sinon.sandbox.create();
 
-        beforeEach(function(done){
-            done();
-        });
+    beforeEach(function(done){
 
-        afterEach(function(done){
+        var BlenderManager                  = function(){};
+        BlenderManager.prototype.addConfig  = blenderAddConfigSpy   = sandbox.stub();
+        BlenderManager.prototype.isEmpty    = blenderIsEmptySpy     = sandbox.stub();
+        BlenderManager.prototype.getDbCalls = blenderGetDbCallsSpy  = sandbox.stub();
+        BlenderManagerStub                  = sandbox.spy(BlenderManager);
 
-            done();
-        });
+        var DBManager                  = function(){};
+        DBManager.prototype.addConfig  = dbAddConfigSpy     = sandbox.stub();
+        DBManager.prototype.isEmpty    = dbIsEmptySpy       = sandbox.stub();
+        DBManager.prototype.getDbCalls = dbGetDbCallsSpy    = sandbox.stub();
+        DBManagerStub                  = sandbox.spy(DBManager);
 
-        it('should have a db and blender config file', function(done){
-            var juicer = new Juicer({
-                config_dir: '../../../config/valid'
+        Juicer = proxyquire.resolve('../../lib/juice', __dirname, {
+            './blendermanager' : BlenderManagerStub,
+            './dbcallmanager': DBManagerStub
+        }).Juicer;
+        done();
+    });
+
+    afterEach(function (done) {
+      sandbox.restore();
+      done();
+    });
+
+    describe('#init', function(){
+
+        it('should call load and init', function(done){
+            var juicer = new Juicer();
+            juicer.load = sandbox.spy();
+            juicer.build = sandbox.spy();
+            juicer.init({
+                config_dir: __dirname + '/../config/valid',
+                mongoose: {}
             });
+            expect(juicer.configDir).to.equal(__dirname + '/../config/valid');
+            expect(juicer.mongoose).to.exist;
+            expect(juicer.load).to.have.been.calledOnce;
+            expect(juicer.build).to.have.been.calledOnce;
+            done();
+        });
+    });
+
+    describe('#blend', function(){
+        it('should return error to callback', function(done) {
             done();
         });
 
+        it('should call set cache', function(done) {
+            done();
+        });
+
+        
+
+    });
+
+    describe('#load', function(){
         it('should error out when cant find directory', function(done){
-            var juicer = new Juicer({
-                config_dir: '../../../config/dir_doesnot_exist'
-            });
+            var juicer = new Juicer();
+            var f = function(){
+                juicer.init({
+                    config_dir: __dirname +  '/../config/dir_doesnot_exist',
+                    mongoose: {}
+                });
+            }
+            expect(f).to.throw(Error);
+            expect(f).to.throw(/config_dir does not exist/);
+            done();
+        });
+    });
+
+
+    describe('#blend', function(){
+        it('should return blended db calls in result', function(done) {
             done();
         });
 
-        it('should error out when doesnt have db config', function(done){
-            var juicer = new Juicer({
-                config_dir: '../../../config/missingfile'
-            });
+        it('should return straight db call in result', function(done){
             done();
         });
 
-        it('should error out when doesnt have db call key in blender file', function(done){
-            var juicer = new Juicer({
-                config_dir: '../../../config/missingdbcallkey'
-            });
+        it('should return err when there is an error', function(done){
             done();
         });
 
-        it('should error out when JSON doesnt load properly', function(done) {
-            var juicer = new Juicer({
-                config_dir: '../../../config/badjson'
-            });
+        it('should emit cache events', function(done) {
+            done();
+        });
+
+        it('should set cache', function(done){
             done();
         });
     });
