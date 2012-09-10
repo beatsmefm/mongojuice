@@ -50,6 +50,20 @@ describe('dbcall.js', function() {
             expect(error).to.be.false;
             done();
         });
+
+        it('should return a MissingParamsError', function(done){
+            dbCall.config = {};
+            dbCall.config.require_one = ['ids', 'tags'];
+            dbCall.config.params = {
+                ids: {},
+                tags: {}
+            }
+            var error = dbCall.findMissingParams({
+                'nothing': 'nothing'
+            });
+            expect(error).to.be.an.instanceof(MissingParamsError);
+            done();
+        });
     });
 
     
@@ -80,7 +94,6 @@ describe('dbcall.js', function() {
                     } 
                 
             }
-            debugger;
             dbCall.run({
                 id: 'id',
                 field1: 'field1'
@@ -109,7 +122,7 @@ describe('dbcall.js', function() {
                     } 
                 }   
             }
-            debugger;
+            Cache.prototype
             dbCall.run({
                 id: 'id',
                 field1: 'field1'

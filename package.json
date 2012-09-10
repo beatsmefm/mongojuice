@@ -1,8 +1,8 @@
 {
   "name": "mongojuice",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "Mongo Route Data Mapping for a REST web service",
-  "author": { "name": "Chris Fricke", "email": "chris.fricke@gmail.com", "url": "http://www.mongojuice.com/" },
+  "author": { "name": "Chris Fricke", "email": "chris.fricke@gmail.com" },
   "repository": {
     "type": "git",
     "url": ""
@@ -18,6 +18,7 @@
     "nconf": "0.5.x",
     "mongoose": "3.0.2",
     "optimist": "0.3.x",
+    "redis": "0.7.x",
     "tracer": "0.5.x",
     "underscore": "1.3.x"
   },

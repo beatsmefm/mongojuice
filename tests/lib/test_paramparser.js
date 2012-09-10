@@ -101,11 +101,9 @@ describe('paramparser.js', function(){
 
         it('should return evaluate nested object', function(done){
             var args = new ParamParser({
-                id: '@thing.id'
+                id: '@result.id'
             }, {
-                thing: {
-                    id: 'someid'
-                }
+                id: 'someid'
             }).parse();
 
             expect(args).to.deep.equal({
@@ -114,45 +112,81 @@ describe('paramparser.js', function(){
             done();
         });
 
-        it('should return evaluate deep nested object (3 levels)', function(done){
-            var args = new ParamParser({
-                id: '@thing.subobj.subobj2.subobj3.id'
-            }, {
-                thing: {
-                    subobj: {
-                        subobj2: {
-                            subobj3: {
-                                id: 'someid'
-                            }
-                        }
-                    }
-                }
-            }).parse();
-
-            expect(args).to.eql({
-                id: 'someid'
-            });
-            done();
-        });
 
         it('should map results to an array', function(done){
+            
             var args = new ParamParser({
-                ids: '$map(@things, id)',
-                id: '@thing.id'
-            }, {
-                thing: {
-                    id: 'baseid'
-                },
-                things: [
+                ids: '$map(@result, id)'
+            }, [
                     { id: 'someid1' },
                     { id: 'someid2' },
                     { id: 'someid3' },
                     { id: 'someid4' }
                 ]
+            ).parse();
+
+            expect(args).to.deep.equal({
+                ids: ['someid1', 'someid2', 'someid3', 'someid4']
+            });
+            done();
+        });
+
+        it('should get sub value on a named @ query', function(done){
+            
+            var args = new ParamParser({
+                ids: '@thing.ids'
+            }, {
+                thing: {
+                    ids: [
+                        'someid1',
+                        'someid2',
+                        'someid3',
+                        'someid4' 
+                    ]
+                }
             }).parse();
 
             expect(args).to.deep.equal({
-                id: 'baseid',
+                ids: ['someid1', 'someid2', 'someid3', 'someid4']
+            });
+            done();
+        });
+
+        it('should map results on a named @query', function(done){
+            
+            var args = new ParamParser({
+                ids: '$map(@thing, id)'
+            }, {
+                thing: [
+                    { id: 'someid1'},
+                     { id: 'someid2'},
+                    { id: 'someid3'},
+                     { id: 'someid4'},
+                ]
+            }).parse();
+
+            expect(args).to.deep.equal({
+                ids: ['someid1', 'someid2', 'someid3', 'someid4']
+            });
+            done();
+        });
+
+        it('should map results on a named @query with subfield', function(done){
+            
+            var args = new ParamParser({
+                ids: '$map(@thing.ids, id)'
+            }, {
+                thing: {
+                    ids: [
+                    { id: 'someid1'},
+                     { id: 'someid2'},
+                    { id: 'someid3'},
+                     { id: 'someid4'},
+                    ]
+                }
+            }).parse(); 
+
+            expect(args).to.deep.equal({
                 ids: ['someid1', 'someid2', 'someid3', 'someid4']
             });
             done();
@@ -187,6 +221,62 @@ describe('paramparser.js', function(){
             });
             done();
         });
+
+        it('should map or results', function(done){
+            var args = new ParamParser({
+                model: 'User',
+                dbcall: {
+                    find: {
+                        enhanced: true,
+                        isMusic: true,
+                        $or: [{ 
+                            _id: {
+                                $in: ':link_ids'
+                            }
+                        }, {
+                            tags: {
+                                $elemMatch: {
+                                    $in: ':tags'
+                                }
+                            }
+                        }, {
+                            field: ':thing.id'
+                        }]
+                    }
+                }
+            }, {
+                tags: ['test'],
+                link_ids: [],
+                thing: {
+                    id: 'someid'
+                }
+            }).parse();
+            
+            expect(args).eql({
+                model: 'User',
+                dbcall: {
+                    find: {
+                        enhanced: true,
+                        isMusic: true,
+                        $or: [{ 
+                            _id: {
+                                $in: []
+                            }
+                        }, {
+                            tags: {
+                                $elemMatch: {
+                                    $in: ['test']
+                                }
+                            }
+                        }, {
+                            field: 'someid'
+                        }]
+                    }
+                }
+            });
+            done();
+        });
+        
 
     });
 });
