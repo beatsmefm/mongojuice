@@ -19,6 +19,7 @@ describe('juice.js', function() {
         dbAddConfigSpy,
         dbIsEmptySpy,
         dbGetDbCallsSpy,
+        mongooseConnectSpy,
         sandbox = sinon.sandbox.create();
 
     beforeEach(function(done){
@@ -35,9 +36,14 @@ describe('juice.js', function() {
         DBManager.prototype.getDbCalls = dbGetDbCallsSpy    = sandbox.stub();
         DBManagerStub                  = sandbox.spy(DBManager);
 
+        mongooseConnectSpy = sandbox.stub();
+
         Juicer = proxyquire.resolve('../../lib/juice', __dirname, {
             './blendermanager' : BlenderManagerStub,
-            './dbcallmanager': DBManagerStub
+            './dbcallmanager': DBManagerStub,
+            'mongoose': {
+                connect: mongooseConnectSpy
+            }
         }).Juicer;
         done();
     });
@@ -53,16 +59,15 @@ describe('juice.js', function() {
             var juicer = new Juicer();
             juicer.load = sandbox.spy();
             juicer.build = sandbox.spy();
+            mongooseConnectSpy.yields(null, 1);
             juicer.init({
                 config_dir: __dirname + '/../config/valid',
                 db: {}
-            }, function(){
-                expect(juicer.configDir).to.equal(__dirname + '/../config/valid');
-                expect(juicer.load).to.have.been.calledOnce;
-                expect(juicer.build).to.have.been.calledOnce;
-                done();
             });
-
+            expect(juicer.configDir).to.equal(__dirname + '/../config/valid');
+            expect(juicer.load).to.have.been.calledOnce;
+            expect(juicer.build).to.have.been.calledOnce;
+            done();
         });
     });
 
