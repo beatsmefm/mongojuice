@@ -118,6 +118,8 @@ describe('paramparser.js', function(){
             var args = new ParamParser({
                 ids: '$map(@result, id)'
             }, [
+                    
+                ],[
                     { id: 'someid1' },
                     { id: 'someid2' },
                     { id: 'someid3' },
