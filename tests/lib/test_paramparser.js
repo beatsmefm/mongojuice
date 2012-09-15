@@ -136,6 +136,8 @@ describe('paramparser.js', function(){
             var args = new ParamParser({
                 ids: '@thing.ids'
             }, {
+                
+            }, {
                 thing: {
                     ids: [
                         'someid1',
