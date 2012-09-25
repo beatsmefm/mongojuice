@@ -1,11 +1,11 @@
 {
   "name": "mongojuice",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Mongo Route Data Mapping for a REST web service",
   "author": { "name": "Chris Fricke", "email": "chris.fricke@gmail.com" },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/herrfricke/mongojuice"
   },
   "scripts": {
     "test": "node ./test"
