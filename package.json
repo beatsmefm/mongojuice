@@ -1,11 +1,11 @@
 {
   "name": "mongojuice",
   "version": "0.0.3",
-  "description": "Mongo Route Data Mapping for a REST web service",
+  "description": "Mongo DB command configuration with Redis caching",
   "author": { "name": "Chris Fricke", "email": "chris.fricke@gmail.com" },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/beatsmefm/mongojuice"
   },
   "scripts": {
     "test": "node ./test"
@@ -34,7 +34,7 @@
   "scripts": {
     "test": ""
   },
-  "engines": { "node": ">= 0.6.0" },
+  "engines": { "node": ">= 0.8.0" },
   "licenses": [ {
     "type": "MIT",
     "url": "http://www.opensource.org/licenses/MIT" 
