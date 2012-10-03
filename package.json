@@ -1,6 +1,6 @@
 {
   "name": "mongojuice",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Mongo DB command configuration with Redis caching",
   "author": { "name": "Chris Fricke", "email": "chris.fricke@gmail.com" },
   "repository": {
