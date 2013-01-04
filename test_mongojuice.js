@@ -118,9 +118,9 @@ j.init({
       x += 1;
       profiler.startProfiling(['mongojuice']);
       start(profiler, req, res);
-    }).listen(8124);
+    }).listen(80);
     profiler.takeSnapshot('Post-Server Snapshot');
-    console.log('Server running at http://127.0.0.1:8124/');
+    console.log('Server running at http://127.0.0.1:80/');
 });
 
 
