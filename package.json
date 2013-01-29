@@ -16,7 +16,7 @@
   "dependencies": {
     "async": "0.1.x",
     "nconf": "0.5.x",
-    "mongoose": "3.0.2",
+    "mongoose": "3.x.x",
     "mongoose-types": "1.0.x",
     "optimist": "0.3.x",
     "redis": "0.7.x",
