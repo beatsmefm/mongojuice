@@ -1,0 +1,19 @@
+{
+  "forin": true,
+  "noarg": true,
+  "eqeqeq": true,
+  "bitwise": true,
+  "strict": true,
+  "undef": true,
+  "unused": true,
+  "latedef": true,
+  "node": true,
+  "maxerr": 50,
+  "newcap": true,
+  "es5": true,
+  "validthis": true,
+  "evil": true,
+  "globals": {
+    
+  }
+}
