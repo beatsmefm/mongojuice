@@ -1,15 +1,18 @@
 {
   "name": "mongojuice",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "Mongo DB command configuration with Redis caching",
-  "author": { "name": "Chris Fricke", "email": "chris.fricke@gmail.com" },
+  "author": {
+    "name": "Chris Fricke",
+    "email": "chris.fricke@gmail.com"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/beatsmefm/mongojuice"
   },
   "scripts": {
-    "test": "node ./test"
-    },
+    "test": ""
+  },
   "bugs": {
     "url": ""
   },
@@ -31,13 +34,19 @@
     "sinon": "1.4.x",
     "sinon-chai": "2.1.x"
   },
-  "scripts": {
-    "test": ""
+  "engines": {
+    "node": ">= 0.8.0"
   },
-  "engines": { "node": ">= 0.8.0" },
-  "licenses": [ {
-    "type": "MIT",
-    "url": "http://www.opensource.org/licenses/MIT" 
-  } ],
-  "keywords": ["mongo", "orm", "rest", "config"]
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://www.opensource.org/licenses/MIT"
+    }
+  ],
+  "keywords": [
+    "mongo",
+    "orm",
+    "rest",
+    "config"
+  ]
 }
