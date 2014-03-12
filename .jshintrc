@@ -10,10 +10,9 @@
   "node": true,
   "maxerr": 50,
   "newcap": true,
-  "es5": true,
   "validthis": true,
   "evil": true,
   "globals": {
-    
+
   }
 }
